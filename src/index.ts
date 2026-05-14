@@ -1,4 +1,4 @@
-export type { Account, TokenUpdate } from "./accounts.ts";
+export type { Account, TokenUpdate } from "./accounts";
 
 export {
 	loadAccounts,
@@ -6,13 +6,13 @@ export {
 	addAccount,
 	removeAccount,
 	updateAccountTokens,
-} from "./accounts.ts";
+} from "./accounts";
 
 export {
 	ensureValidToken,
 	selectAccount,
 	addNewAccount,
 	validateToken,
-} from "./auth.ts";
+} from "./auth";
 
-export { deploy, DeployError, type DeployOptions, type DeployResult } from "./deploy.ts";
+export { deploy, DeployError, type DeployOptions, type DeployResult } from "./deploy";

@@ -3,8 +3,8 @@ import { defineCommand } from "citty";
 import { createSpinner } from "nanospinner";
 import pc from "picocolors";
 
-import { loadAccounts } from "../accounts.ts";
-import { ensureValidToken, validateToken } from "../auth.ts";
+import { loadAccounts } from "../accounts";
+import { ensureValidToken, validateToken } from "../auth";
 
 export const whoamiCommand = defineCommand({
 	meta: {

@@ -2,7 +2,7 @@ import * as p from "@clack/prompts";
 import { defineCommand } from "citty";
 import pc from "picocolors";
 
-import { loadAccounts, removeAccount } from "../accounts.ts";
+import { loadAccounts, removeAccount } from "../accounts";
 
 export const removeCommand = defineCommand({
 	meta: {

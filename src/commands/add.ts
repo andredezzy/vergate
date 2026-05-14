@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import { defineCommand } from "citty";
 
-import { addNewAccount } from "../auth.ts";
+import { addNewAccount } from "../auth";
 
 export const addCommand = defineCommand({
 	meta: {

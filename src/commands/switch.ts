@@ -2,7 +2,7 @@ import * as p from "@clack/prompts";
 import { defineCommand } from "citty";
 import pc from "picocolors";
 
-import { selectAccount } from "../auth.ts";
+import { selectAccount } from "../auth";
 
 export const switchCommand = defineCommand({
 	meta: {

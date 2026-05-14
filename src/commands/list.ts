@@ -2,7 +2,7 @@ import * as p from "@clack/prompts";
 import { defineCommand } from "citty";
 import pc from "picocolors";
 
-import { loadAccounts } from "../accounts.ts";
+import { loadAccounts } from "../accounts";
 
 export const listCommand = defineCommand({
 	meta: {

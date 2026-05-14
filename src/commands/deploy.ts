@@ -2,9 +2,9 @@ import * as p from "@clack/prompts";
 import { defineCommand } from "citty";
 import pc from "picocolors";
 
-import { findAccountByLabel } from "../accounts.ts";
-import { ensureValidToken, selectAccount } from "../auth.ts";
-import { deploy, DeployError } from "../deploy.ts";
+import { findAccountByLabel } from "../accounts";
+import { ensureValidToken, selectAccount } from "../auth";
+import { deploy, DeployError } from "../deploy";
 
 export const deployCommand = defineCommand({
 	meta: {

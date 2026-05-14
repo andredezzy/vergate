@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 import { defineCommand, runMain } from "citty";
 
-import { accountsCommand } from "./commands/accounts.ts";
-import { deployCommand } from "./commands/deploy.ts";
+import { accountsCommand } from "./commands/accounts";
+import { deployCommand } from "./commands/deploy";
 
 const main = defineCommand({
 	meta: {

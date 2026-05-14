@@ -1,10 +1,10 @@
 import { defineCommand } from "citty";
 
-import { addCommand } from "./add.ts";
-import { listCommand } from "./list.ts";
-import { removeCommand } from "./remove.ts";
-import { switchCommand } from "./switch.ts";
-import { whoamiCommand } from "./whoami.ts";
+import { addCommand } from "./add";
+import { listCommand } from "./list";
+import { removeCommand } from "./remove";
+import { switchCommand } from "./switch";
+import { whoamiCommand } from "./whoami";
 
 export const accountsCommand = defineCommand({
 	meta: {

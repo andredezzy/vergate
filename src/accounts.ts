@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import { ACCOUNTS_FILE } from "./config.ts";
+import { ACCOUNTS_FILE } from "./config";
 
 export interface Account {
 	label: string;

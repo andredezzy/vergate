@@ -8,8 +8,8 @@ import {
 	addAccount,
 	loadAccounts,
 	updateAccountTokens,
-} from "./accounts.ts";
-import { VERCEL_AUTH_FILE } from "./config.ts";
+} from "./accounts";
+import { VERCEL_AUTH_FILE } from "./config";
 
 const VERCEL_OAUTH_CLIENT_ID = "cl_HYyOPBNtFMfHhaUn9L4QPfTZz6TP47bp";
 
