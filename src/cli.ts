@@ -2,6 +2,7 @@
 import { defineCommand, runMain } from "citty";
 
 import { addCommand } from "./commands/add.ts";
+import { deployCommand } from "./commands/deploy.ts";
 import { listCommand } from "./commands/list.ts";
 import { removeCommand } from "./commands/remove.ts";
 import { switchCommand } from "./commands/switch.ts";
@@ -15,6 +16,7 @@ const main = defineCommand({
 	},
 	subCommands: {
 		add: addCommand,
+		deploy: deployCommand,
 		switch: switchCommand,
 		list: listCommand,
 		remove: removeCommand,

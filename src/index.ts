@@ -14,3 +14,5 @@ export {
 	addNewAccount,
 	validateToken,
 } from "./auth.ts";
+
+export { deploy, DeployError, type DeployOptions, type DeployResult } from "./deploy.ts";
