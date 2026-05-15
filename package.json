@@ -1,6 +1,6 @@
 {
   "name": "vergate",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Vercel multi-account manager. CLI + library for switching between Vercel identities.",
   "author": "Andre Dezzy",
   "license": "MIT",

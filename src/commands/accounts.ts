@@ -1,6 +1,7 @@
 import { defineCommand } from "citty";
 
 import { addCommand } from "./add";
+import { importCommand } from "./import";
 import { listCommand } from "./list";
 import { removeCommand } from "./remove";
 import { switchCommand } from "./switch";
@@ -13,6 +14,7 @@ export const accountsCommand = defineCommand({
 	},
 	subCommands: {
 		add: addCommand,
+		import: importCommand,
 		switch: switchCommand,
 		list: listCommand,
 		remove: removeCommand,

@@ -296,6 +296,76 @@ export async function addNewAccount(): Promise<Account> {
 	return account;
 }
 
+export async function importCurrentAccount(): Promise<Account> {
+	const auth = readVercelAuth();
+
+	if (!auth) {
+		throw new Error(
+			"No Vercel CLI session found. Run `vercel login` first.",
+		);
+	}
+
+	const isValid = await validateToken(auth.token);
+
+	if (!isValid) {
+		throw new Error(
+			"Vercel CLI token is invalid or expired. Run `vercel login` first.",
+		);
+	}
+
+	const username = await getUsername(auth.token);
+	const existingAccounts = loadAccounts();
+	const existing = existingAccounts.find((a) => a.username === username);
+
+	if (existing) {
+		updateAccountTokens(existing.label, {
+			token: auth.token,
+			refreshToken: auth.refreshToken,
+			expiresAt: auth.expiresAt,
+		});
+
+		p.log.success(
+			`Updated tokens for existing account "${pc.green(existing.label)}" (${username}).`,
+		);
+
+		return { ...existing, ...auth };
+	}
+
+	p.log.success(`Found session for ${pc.green(username)}.`);
+
+	const label = await p.text({
+		message: "Label for this account:",
+		validate: (value) => {
+			if (!value.trim()) {
+				return "Label cannot be empty";
+			}
+
+			if (existingAccounts.some((a) => a.label === value.trim())) {
+				return "An account with this label already exists";
+			}
+		},
+	});
+
+	if (p.isCancel(label)) {
+		p.cancel("Import cancelled.");
+		process.exit(0);
+	}
+
+	const account: Account = {
+		label: label.trim(),
+		username,
+		token: auth.token,
+		refreshToken: auth.refreshToken,
+		expiresAt: auth.expiresAt,
+	};
+
+	addAccount(account);
+
+	p.log.success(`Account "${account.label}" imported successfully.`);
+
+	return account;
+}
+
 export async function selectAccount(): Promise<Account> {
 	const accounts = loadAccounts();
 
