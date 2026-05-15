@@ -4,7 +4,7 @@ import { createSpinner } from "nanospinner";
 import pc from "picocolors";
 
 import { loadAccounts } from "../accounts";
-import { ensureValidToken, validateToken } from "../auth";
+import { ensureValidToken } from "../auth";
 
 export const whoamiCommand = defineCommand({
 	meta: {
@@ -58,33 +58,19 @@ export const whoamiCommand = defineCommand({
 
 		const spinner = createSpinner("Validating token...").start();
 
-		const isValid = await validateToken(account.token);
-
-		if (isValid) {
+		try {
+			const validAccount = await ensureValidToken(account);
 			spinner.success("Token is valid");
-		} else {
+
+			p.log.message(`Label:    ${pc.bold(validAccount.label)}`);
+			p.log.message(`Username: ${pc.bold(validAccount.username)}`);
+			p.log.message(`Status:   ${pc.green("valid")}`);
+		} catch {
 			spinner.error("Token is invalid or expired");
-		}
 
-		p.log.message(`Label:    ${pc.bold(account.label)}`);
-		p.log.message(`Username: ${pc.bold(account.username)}`);
-		p.log.message(
-			`Status:   ${isValid ? pc.green("valid") : pc.red("expired")}`,
-		);
-
-		if (!isValid) {
-			const shouldRefresh = await p.confirm({
-				message: "Attempt to refresh token?",
-				initialValue: true,
-			});
-
-			if (p.isCancel(shouldRefresh) || !shouldRefresh) {
-				p.outro("");
-				return;
-			}
-
-			await ensureValidToken(account);
-			p.log.success("Token refreshed.");
+			p.log.message(`Label:    ${pc.bold(account.label)}`);
+			p.log.message(`Username: ${pc.bold(account.username)}`);
+			p.log.message(`Status:   ${pc.red("expired")}`);
 		}
 
 		p.outro("Done!");

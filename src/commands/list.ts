@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import pc from "picocolors";
 
 import { loadAccounts } from "../accounts";
+import { refreshTokenIfNeeded } from "../auth";
 
 export const listCommand = defineCommand({
 	meta: {
@@ -19,16 +20,15 @@ export const listCommand = defineCommand({
 
 		p.intro("vergate accounts");
 
-		const nowInSeconds = Math.floor(Date.now() / 1000);
-
 		for (const account of accounts) {
-			const isExpired =
-				typeof account.expiresAt === "number" &&
-				account.expiresAt <= nowInSeconds;
+			let status: string;
 
-			const status = isExpired
-				? pc.red("expired")
-				: pc.green("valid");
+			try {
+				await refreshTokenIfNeeded(account);
+				status = pc.green("valid");
+			} catch {
+				status = pc.red("expired");
+			}
 
 			p.log.message(
 				`${pc.bold(account.label)}  ${pc.gray(account.username)}  ${status}`,

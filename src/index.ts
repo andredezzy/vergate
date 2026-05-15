@@ -10,6 +10,7 @@ export {
 
 export {
 	ensureValidToken,
+	refreshTokenIfNeeded,
 	selectAccount,
 	addNewAccount,
 	validateToken,

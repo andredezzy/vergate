@@ -177,12 +177,13 @@ export async function refreshAccountViaLogin(): Promise<VercelAuthData> {
 	return newAuth;
 }
 
-export async function ensureValidToken(account: Account): Promise<Account> {
+export async function refreshTokenIfNeeded(
+	account: Account,
+): Promise<Account> {
 	if (isAccessTokenExpired(account)) {
 		const refreshed = await refreshTokenSilently(account);
 
 		if (refreshed) {
-			p.log.success("Token refreshed automatically.");
 			return refreshed;
 		}
 	}
@@ -196,27 +197,37 @@ export async function ensureValidToken(account: Account): Promise<Account> {
 	const refreshed = await refreshTokenSilently(account);
 
 	if (refreshed) {
-		p.log.success("Token refreshed automatically.");
 		return refreshed;
 	}
 
-	p.log.warn(`Token for "${account.label}" is expired or invalid.`);
-	p.log.warn("Refresh token is also expired. Browser login required.");
+	throw new Error(
+		`Token for "${account.label}" is expired and could not be refreshed.`,
+	);
+}
 
-	const newAuth = await refreshAccountViaLogin();
+export async function ensureValidToken(account: Account): Promise<Account> {
+	try {
+		const refreshed = await refreshTokenIfNeeded(account);
+		return refreshed;
+	} catch {
+		p.log.warn(`Token for "${account.label}" is expired or invalid.`);
+		p.log.warn("Refresh token is also expired. Browser login required.");
 
-	updateAccountTokens(account.label, {
-		token: newAuth.token,
-		refreshToken: newAuth.refreshToken,
-		expiresAt: newAuth.expiresAt,
-	});
+		const newAuth = await refreshAccountViaLogin();
 
-	return {
-		...account,
-		token: newAuth.token,
-		refreshToken: newAuth.refreshToken,
-		expiresAt: newAuth.expiresAt,
-	};
+		updateAccountTokens(account.label, {
+			token: newAuth.token,
+			refreshToken: newAuth.refreshToken,
+			expiresAt: newAuth.expiresAt,
+		});
+
+		return {
+			...account,
+			token: newAuth.token,
+			refreshToken: newAuth.refreshToken,
+			expiresAt: newAuth.expiresAt,
+		};
+	}
 }
 
 export async function addNewAccount(): Promise<Account> {
