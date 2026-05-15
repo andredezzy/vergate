@@ -18,7 +18,7 @@
 
 ---
 
-Vercel CLI only supports one account at a time. **vergate** manages multiple Vercel identities with automatic token refresh, and wraps `vercel deploy` with account selection and `.git` hiding to bypass author detection.
+Vercel CLI only supports one account at a time. **vergate** manages multiple Vercel identities with automatic token refresh, and wraps `vercel deploy` with seamless account selection.
 
 ## Installation
 
@@ -130,7 +130,6 @@ interface DeployOptions {
   token: string;
   cwd: string;
   isProduction?: boolean;
-  hideGit?: boolean;
   extraArgs?: string[];
 }
 
@@ -143,8 +142,6 @@ interface DeployResult {
 ## How it works
 
 **Multi-account**: Accounts are stored locally with encrypted tokens. When a token expires, vergate silently refreshes it via Vercel's OAuth endpoint. If the refresh token is also expired, it opens a browser login.
-
-**Git hiding**: The `--hide-git` flag temporarily renames `.git` during deploy. This prevents Vercel from detecting the repository's commit authors. The directory is always restored — even on crashes or `Ctrl+C`.
 
 **Storage locations**:
 - macOS: `~/Library/Application Support/vergate/accounts.json`
@@ -163,7 +160,7 @@ interface DeployResult {
 | `addAccount(account)` | Save a new account |
 | `removeAccount(label)` | Delete an account |
 | `updateAccountTokens(label, tokens)` | Update token fields |
-| `deploy(options)` | Deploy to Vercel with optional git hiding |
+| `deploy(options)` | Deploy to Vercel |
 
 ## License
 
