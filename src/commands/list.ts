@@ -13,7 +13,7 @@ export const listCommand = defineCommand({
 		const accounts = loadAccounts();
 
 		if (accounts.length === 0) {
-			p.log.warn("No accounts saved. Run `vergate add` to add one.");
+			p.log.warn("No accounts saved. Run `vergate accounts add` to add one.");
 			return;
 		}
 

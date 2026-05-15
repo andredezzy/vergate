@@ -10,7 +10,7 @@ export const switchCommand = defineCommand({
 		description: "Select and validate a Vercel account",
 	},
 	async run() {
-		p.intro("vergate switch");
+		p.intro("vergate accounts switch");
 
 		const account = await selectAccount();
 

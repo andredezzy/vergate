@@ -17,7 +17,7 @@ export const removeCommand = defineCommand({
 		},
 	},
 	async run({ args }) {
-		p.intro("vergate remove");
+		p.intro("vergate accounts remove");
 
 		let label = args.label as string | undefined;
 

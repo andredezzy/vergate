@@ -9,7 +9,7 @@ export const addCommand = defineCommand({
 		description: "Add a new Vercel account via browser login",
 	},
 	async run() {
-		p.intro("vergate add");
+		p.intro("vergate accounts add");
 
 		await addNewAccount();
 

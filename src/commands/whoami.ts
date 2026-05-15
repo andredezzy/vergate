@@ -19,7 +19,7 @@ export const whoamiCommand = defineCommand({
 		},
 	},
 	async run({ args }) {
-		p.intro("vergate whoami");
+		p.intro("vergate accounts whoami");
 
 		let label = args.label as string | undefined;
 
@@ -27,7 +27,7 @@ export const whoamiCommand = defineCommand({
 			const accounts = loadAccounts();
 
 			if (accounts.length === 0) {
-				p.log.warn("No accounts saved. Run `vergate add` to add one.");
+				p.log.warn("No accounts saved. Run `vergate accounts add` to add one.");
 				p.outro("");
 				return;
 			}
