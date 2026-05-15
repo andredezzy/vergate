@@ -177,6 +177,42 @@ export async function refreshAccountViaLogin(): Promise<VercelAuthData> {
 	return newAuth;
 }
 
+async function recoverFromVercelCli(
+	account: Account,
+): Promise<Account | null> {
+	const auth = readVercelAuth();
+
+	if (!auth) {
+		return null;
+	}
+
+	const isValid = await validateToken(auth.token);
+
+	if (!isValid) {
+		return null;
+	}
+
+	try {
+		const username = await getUsername(auth.token);
+
+		if (username !== account.username) {
+			return null;
+		}
+	} catch {
+		return null;
+	}
+
+	const tokens = {
+		token: auth.token,
+		refreshToken: auth.refreshToken,
+		expiresAt: auth.expiresAt,
+	};
+
+	updateAccountTokens(account.label, tokens);
+
+	return { ...account, ...tokens };
+}
+
 export async function refreshTokenIfNeeded(
 	account: Account,
 ): Promise<Account> {
@@ -198,6 +234,12 @@ export async function refreshTokenIfNeeded(
 
 	if (refreshed) {
 		return refreshed;
+	}
+
+	const recovered = await recoverFromVercelCli(account);
+
+	if (recovered) {
+		return recovered;
 	}
 
 	throw new Error(
