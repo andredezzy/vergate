@@ -60,9 +60,6 @@ vergate deploy
 # Production deploy
 vergate deploy --prod
 
-# Hide .git to bypass author detection
-vergate deploy --prod --hide-git
-
 # Use a specific account without prompting
 vergate deploy --prod --account personal
 ```
