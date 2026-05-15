@@ -107,7 +107,6 @@ try {
     token: account.token,
     cwd: process.cwd(),
     isProduction: true,
-    hideGit: true,
   });
 
   console.log(result.url);     // https://my-app-xxx.vercel.app
